@@ -7,7 +7,9 @@ var UsuariosSchema = Schema({
     usuario : String,
     clave : String,
     tipo : String,
-    activo : String
+    activo : String,
+    ip : String,
+    imagen : String
 });
 
 module.exports = mongoose.model('Usuarios',UsuariosSchema);

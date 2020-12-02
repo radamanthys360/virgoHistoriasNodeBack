@@ -18,6 +18,8 @@
     "moment": "^2.29.1",
     "mongoose": "^5.10.17",
     "mongoose-pagination": "^1.0.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "properties-reader": "^2.1.1",
+    "validator": "^13.5.1"
   }
 }

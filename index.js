@@ -1,17 +1,21 @@
 'use strict'
 
+const PropertiesReader = require('properties-reader');//para leer un properties
+const prop = PropertiesReader('app.properties'); //cargando nuestro properties
 var moongose = require('mongoose');
 var app = require('./app');
-var port = process.env.PORT || 3880;
+var port = process.env.PORT || prop.get('db.puerto');
+var uri = prop.get('db.cadena.con');
 
-moongose.connect('mongodb://localhost:27017/virgohistorias',(err,res) =>{
+
+moongose.connect(uri,{ useNewUrlParser: true, useFindAndModify: false},(err,res) =>{
   if(err){
       throw err;
   }else{
-      console.log('conexion establecida correctamente ....');
+      console.log(prop.get('db.mensaje.exito'));
 
       app.listen(port,function (){
-        console.log('servidor para api rest virgohistoria listo en http://localhost:'+port);
+        console.log(prop.get('db.mensaje.inicio'));
       });
   }
 });
