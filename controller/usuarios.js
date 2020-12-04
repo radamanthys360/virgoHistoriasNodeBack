@@ -9,7 +9,6 @@ const usuarios = require('../model/usuarios');
 var fs = require('fs');//sistema de ficheros
 var path = require('path');// trabajar con los path de los archivos y directorios
 
-
 //creando funcion para testear controlador
 function test(req,res){
     res.status(200).send({message: prop.get('usuario.test.mensaje')});
@@ -52,7 +51,7 @@ function login(req,res){
     var usuario = parametros.usuario;
     var clave = parametros.clave;
 
-    Usuario.findOne({usuario: usuario}, (err, usuario) =>{
+    Usuario.findOne({usuario: usuario,activo: 1}, (err, usuario) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
@@ -91,6 +90,23 @@ function updateUsuario(req,res){
                 res.status(404).send({message: prop.get('error.update')})
             }else{
                 res.status(200).send({usuario:usuarioUpdate})
+            }
+        }
+    });
+}
+
+//actualizar usuario
+function deleteUsuario(req,res){
+    var id = req.params.id; // recogiendo el id de la url
+
+    usuarios.findByIdAndRemove(id, (err, usuarioDelete) => {
+        if(err){
+            res.status(500).send({message: prop.get('error.general.mongo')})
+        }else{
+            if(!usuarioDelete){
+                res.status(404).send({message: prop.get('error.delete')})
+            }else{
+                res.status(200).send({usuario:usuarioDelete})
             }
         }
     });
@@ -177,6 +193,50 @@ function getImageFile(req,res){
     });
 }
 
+//para devolver un usuario en especifico
+function getUsuario(req,res){
+    var usuarioId = req.params.id;
+
+    Usuario.findById(usuarioId, (err,usuarioGet) =>{
+        if(err){
+            res.status(500).send({message: prop.get('error.general.mongo')});
+        }else{
+            if(!usuarioGet){
+                res.status(404).send({message: prop.get('usuario.db.login')});
+            }else{
+                res.status(200).send({usuario : usuarioGet});
+            }
+        }
+    });
+}
+
+//trayendo todos paginados
+function getUsuarios(req,res){
+    if(req.params.page){
+        var page = req.params.page;
+    }else{
+        var page = 1;
+    }
+    var pagina = prop.get('registros.pagina.size');
+    const CustomItems = {
+        totalDocs: 'itemCount',
+        docs: 'usuarios',
+        limit: 'perPage',
+        page: 'page',
+        totalPages: 'pages',
+    };
+    //definir opciones de petición
+    const options = { page: page, limit: pagina, sort: 'nombre', customLabels: CustomItems };
+
+    //paginar datos
+    usuarios.paginate({}, options, (err, usuariosPag) => {
+        if (err) return res.status(500).send({ message: prop.get('error.general.mongo')});
+
+        if (!usuariosPag) return res.status(404).send({ message: prop.get('busqueda.lista.vacia') });
+
+        return res.status(200).send({ usuariosPag });
+    });
+}
 
 
 //exportamos la function para su uso
@@ -187,5 +247,8 @@ module.exports = {
     updateUsuario,
     validarNombreUsuario,
     upImage,
-    getImageFile
+    getImageFile,
+    getUsuario,
+    getUsuarios,
+    deleteUsuario
 };
