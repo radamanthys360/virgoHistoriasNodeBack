@@ -195,8 +195,8 @@ function getImageFile(req,res){
 //para devolver un usuario en especifico
 function getUsuario(req,res){
     var usuarioId = req.params.id;
-
-    usuarios.findById(usuarioId, (err,usuarioGet) =>{
+    usuarios.findOne({_id: usuarioId,activo: 1}, (err, usuarioGet) =>{
+   // usuarios.findById(usuarioId, (err,usuarioGet) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
@@ -228,7 +228,7 @@ function getUsuarios(req,res){
     const options = { page: page, limit: pagina, sort: 'usuario', customLabels: CustomItems };
 
     //paginar datos
-    usuarios.paginate({}, options, (err, usuariosPag) => {
+    usuarios.paginate({activo: 1}, options, (err, usuariosPag) => {
         if (err) return res.status(500).send({ message: prop.get('error.general.mongo')});
 
         if (!usuariosPag) return res.status(404).send({ message: prop.get('busqueda.lista.vacia') });

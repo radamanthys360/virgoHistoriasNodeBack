@@ -11,7 +11,8 @@ exports.createToken = function(usuario){
      name: usuario.usuario,
      type: usuario.tipo,
      today: moment().unix(),//se le aplica la fecha actual
-     exp: moment().add(5,'minutes').unix()//se vencera dentro de 5 minutos 
+     exp: moment().add(60,'minutes').unix()//se vencera dentro de 5 minutos 
+   //  exp: moment().add(5,'minutes').unix()//se vencera dentro de 5 minutos 
  };
 
  return jwt.encode(datos,prop.get('app.secreta'));

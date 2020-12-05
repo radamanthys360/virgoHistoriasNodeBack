@@ -18,6 +18,7 @@ function saveCategoria(req,res){
     if(validarCategoria(parametros)){
         categoria.nombre = parametros.nombre;
         categoria.activo = '1';
+        //console.log(categoria);
         categoria.save((err,CategoriaStored) =>{
             if(err){//validando si existio un error
                     res.status(500).send({message: prop.get('error.insertar')});
@@ -70,13 +71,13 @@ function updateCategoria(req,res){
 //para devolver un registro en especifico
 function getCategoria(req,res){
     var id = req.params.id;
-
-    Categorias.findById(id, (err,categoriaGet) =>{
+    Categorias.findOne({_id: id,activo: 1}, (err, categoriaGet) =>{
+ //   Categorias.findById(id, (err,categoriaGet) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
             if(!categoriaGet){
-                res.status(404).send({message: prop.get('usuario.db.login')});
+                res.status(404).send({message: prop.get('categoria.db.registro')});
             }else{
                 res.status(200).send({usuario : categoriaGet});
             }
@@ -103,7 +104,7 @@ function getCategorias(req,res){
     const options = { page: page, limit: pagina, sort: 'nombre', customLabels: CustomItems };
 
     //paginar datos
-    Categorias.paginate({}, options, (err, categoriasPag) => {
+    Categorias.paginate({activo: 1}, options, (err, categoriasPag) => {
         if (err) return res.status(500).send({ message: prop.get('error.general.mongo')});
 
         if (!categoriasPag) return res.status(404).send({ message: prop.get('busqueda.lista.vacia') });

@@ -6,7 +6,7 @@ var mongoosePaginatev2 = require('mongoose-paginate-v2');
 
 var CategoriaSchema = Schema({
     nombre : String,
-    activa : String
+    activo : String
 });
 
 //activar paginado
