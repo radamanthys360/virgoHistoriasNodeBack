@@ -8,7 +8,7 @@ var port = process.env.PORT || prop.get('db.puerto');
 var uri = prop.get('db.cadena.con');
 
 
-moongose.connect(uri,{ useNewUrlParser: true, useFindAndModify: false},(err,res) =>{
+moongose.connect(uri,{ useNewUrlParser: true, useFindAndModify: false,useUnifiedTopology: true},(err,res) =>{
   if(err){
       throw err;
   }else{

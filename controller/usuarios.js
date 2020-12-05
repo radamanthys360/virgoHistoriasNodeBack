@@ -1,6 +1,5 @@
 'use strict'
 var bcrypt = require('bcrypt-nodejs');
-var Usuario = require('../model/usuarios');
 const PropertiesReader = require('properties-reader');//para leer un properties
 const prop = PropertiesReader('app.properties'); //cargando nuestro properties
 var validator = require('validator'); // para validar la data
@@ -16,7 +15,7 @@ function test(req,res){
 
 // function para guardar un nuevo registro
 function saveUsuario(req,res){
-    var usuario = new Usuario();
+    var usuario = new usuarios();
     var parametros = req.body;
     console.log(parametros);
     if(validarUsuario(parametros)){
@@ -51,7 +50,7 @@ function login(req,res){
     var usuario = parametros.usuario;
     var clave = parametros.clave;
 
-    Usuario.findOne({usuario: usuario,activo: 1}, (err, usuario) =>{
+    usuarios.findOne({usuario: usuario,activo: 1}, (err, usuario) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
@@ -136,7 +135,7 @@ function validarUsuario(parametros) {
 function validarNombreUsuario(req,res){
     var parametros = req.body;
     var nombreUsuario = parametros.usuario;
-    Usuario.findOne({usuario: nombreUsuario}, (err, usuario) =>{
+    usuarios.findOne({usuario: nombreUsuario}, (err, usuario) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
@@ -197,7 +196,7 @@ function getImageFile(req,res){
 function getUsuario(req,res){
     var usuarioId = req.params.id;
 
-    Usuario.findById(usuarioId, (err,usuarioGet) =>{
+    usuarios.findById(usuarioId, (err,usuarioGet) =>{
         if(err){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
@@ -226,7 +225,7 @@ function getUsuarios(req,res){
         totalPages: 'pages',
     };
     //definir opciones de petición
-    const options = { page: page, limit: pagina, sort: 'nombre', customLabels: CustomItems };
+    const options = { page: page, limit: pagina, sort: 'usuario', customLabels: CustomItems };
 
     //paginar datos
     usuarios.paginate({}, options, (err, usuariosPag) => {

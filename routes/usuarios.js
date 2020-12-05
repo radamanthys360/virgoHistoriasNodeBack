@@ -22,6 +22,6 @@ api.post('/upload-image-usuario/:id',[auth.validateAuth,data_uploadU],UsuarioCon
 api.get('/get-image-usuario/:imageFile',auth.validateAuth,UsuarioController.getImageFile);
 api.get('/usuario/:id',auth.validateAuth,UsuarioController.getUsuario);
 api.get('/usuarios/:page?',auth.validateAuth,UsuarioController.getUsuarios);
-api.delete('/usuarios/:id',auth.validateAuth,UsuarioController.deleteUsuario);
+//api.delete('/usuarios/:id',auth.validateAuth,UsuarioController.deleteUsuario);
 
 module.exports = api;
