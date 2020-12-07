@@ -62,7 +62,7 @@ function updateCategoria(req,res){
             if(!categoriaUpdate){
                 res.status(404).send({message: prop.get('error.update')})
             }else{
-                res.status(200).send({usuario:categoriaUpdate})
+                res.status(200).send({categoria:categoriaUpdate})
             }
         }
     });
@@ -79,7 +79,7 @@ function getCategoria(req,res){
             if(!categoriaGet){
                 res.status(404).send({message: prop.get('categoria.db.registro')});
             }else{
-                res.status(200).send({usuario : categoriaGet});
+                res.status(200).send({categoria : categoriaGet});
             }
         }
     });

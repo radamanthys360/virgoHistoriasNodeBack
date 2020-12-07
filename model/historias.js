@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var mongoosePaginatev2 = require('mongoose-paginate-v2');
 
 var HistoriaSchema = Schema({
     fkUsuario : { type: Schema.ObjectId, ref: 'Usuarios'},
@@ -11,8 +12,11 @@ var HistoriaSchema = Schema({
     fechaCreacion : Date,
     valoracion : Number,
     numVisto : Number,
-    estado : String,
+    activo : String,
     fkCategoria : { type: Schema.ObjectId, ref: 'Categorias'}
 });
+
+//activar paginado
+HistoriaSchema.plugin(mongoosePaginatev2);
 
 module.exports = mongoose.model('Historias',HistoriaSchema);
