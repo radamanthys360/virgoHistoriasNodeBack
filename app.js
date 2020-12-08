@@ -8,7 +8,8 @@ var app = express();
 //cargar rutas
 var usuario_routes = require('./routes/usuarios'); //ruta de usuarios
 var categoria_routes = require('./routes/categorias');//ruta de categorias
-var historias_routes = require('./routes/historias');//ruta de categorias
+var historias_routes = require('./routes/historias');//ruta de historias
+var comentarios_routes = require('./routes/comentarios');//ruta de comentarios
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -24,9 +25,10 @@ app.use((req, res, next) =>{
 })
 
 // rutas bases
-app.use('/api',usuario_routes) //por ser estandar
-app.use('/api',categoria_routes)
-app.use('/api',historias_routes)
+app.use('/api',usuario_routes); //por ser estandar
+app.use('/api',categoria_routes);
+app.use('/api',historias_routes);
+app.use('/api',comentarios_routes);
 
 /* app.get('/inicio', function(req,res){
    res.status(200).send({message: 'Incicio restApi virgo historias'});

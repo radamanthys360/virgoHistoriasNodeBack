@@ -11,7 +11,7 @@ var path = require('path');// trabajar con los path de los archivos y directorio
 
 //creando funcion para testear controlador
 function test(req,res){
-    res.status(200).send({message: prop.get('categoria.test.mensaje')});
+    res.status(200).send({message: prop.get('historia.test.mensaje')});
 }
 
 // function para guardar un nuevo registro
@@ -95,7 +95,7 @@ function getHistoria(req,res){
             res.status(500).send({message: prop.get('error.general.mongo')});
         }else{
             if(!historiaGet){
-                res.status(404).send({message: prop.get('categoria.db.registro')});
+                res.status(404).send({message: prop.get('historia.db.registro')});
             }else{
                 res.status(200).send({historia : historiaGet});
             }
@@ -149,7 +149,7 @@ function upImage(req,res){
                 if(!historiaUpdate){
                     res.status(404).send({message: prop.get('error.update')})
                 }else{
-                    res.status(200).send({usuario:historiaUpdate})
+                    res.status(200).send({historia:historiaUpdate})
                 }
             });
         }else{
