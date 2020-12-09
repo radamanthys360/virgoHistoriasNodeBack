@@ -13,8 +13,8 @@ var data_uploadU = multipart({uploadDir:direccionUsuario});//seteando direccion 
 
 //diferentes metoodos rest del controlador
 api.get('/test-usuario',auth.validateAuth,UsuarioController.test);
-api.post('/usuarios',auth.validateAuth,UsuarioController.saveUsuario);
-//api.post('/usuarios',UsuarioController.saveUsuario);
+//api.post('/usuarios',auth.validateAuth,UsuarioController.saveUsuario);
+api.post('/usuarios',UsuarioController.saveUsuario); // primera vez que se ejecuta la app
 api.post('/login',UsuarioController.login);
 api.put('/usuarios/:id',auth.validateAuth,UsuarioController.updateUsuario);
 api.get('/validarUsuario',auth.validateAuth,UsuarioController.validarNombreUsuario);
